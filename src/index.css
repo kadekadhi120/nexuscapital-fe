@@ -1,0 +1,347 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   NEXUSCAPITAL DESIGN SYSTEM — CSS Custom Properties
+   8pt grid · Inter font · Charcoal/Slate foundation
+═══════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Color Palette ─────────────────────────────────────── */
+  /* Base surface scale — dark-first, serious financial tone  */
+  --color-surface-900: #0d1117;   /* deepest bg — body/app shell */
+  --color-surface-800: #161b22;   /* sidebar, panels */
+  --color-surface-700: #1c2230;   /* cards */
+  --color-surface-600: #242d3d;   /* elevated cards, hover */
+  --color-surface-500: #2d3748;   /* borders, dividers */
+  --color-surface-400: #4a5568;   /* muted text, disabled */
+  --color-surface-300: #718096;   /* secondary text */
+  --color-surface-200: #a0aec0;   /* label text */
+  --color-surface-100: #e2e8f0;   /* primary text on dark */
+  --color-surface-50:  #f7fafc;   /* pure text / light bg */
+
+  /* Bull / Bear indicators — clean, not neon */
+  --color-bull-500: #22c55e;      /* strong bull */
+  --color-bull-400: #4ade80;      /* mild bull */
+  --color-bull-100: #14532d1a;    /* bull tint bg */
+  --color-bear-500: #ef4444;      /* strong bear */
+  --color-bear-400: #f87171;      /* mild bear */
+  --color-bear-100: #7f1d1d1a;    /* bear tint bg */
+
+  /* Accent — a single muted blue, not purple/neon */
+  --color-accent-500: #3b82f6;    /* primary action / links */
+  --color-accent-400: #60a5fa;    /* hover state */
+  --color-accent-600: #2563eb;    /* pressed state */
+  --color-accent-100: #1e3a5f1a;  /* accent tint bg */
+
+  /* Semantic */
+  --color-warning-500: #f59e0b;
+  --color-warning-100: #78350f1a;
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-sans: 'Inter', 'system-ui', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Spacing — 8pt grid ─────────────────────────────────── */
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3:  12px;
+  --spacing-4:  16px;
+  --spacing-5:  20px;
+  --spacing-6:  24px;
+  --spacing-8:  32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+
+  /* ── Border Radius ──────────────────────────────────────── */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.4), 0 1px 2px -1px rgba(0,0,0,0.4);
+  --shadow-panel: 0 4px 16px 0 rgba(0,0,0,0.5);
+}
+
+/* ── Global base ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-surface-900);
+  color: var(--color-surface-100);
+  min-height: 100vh;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Scrollbar styling — subtle for dark UI ─────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-surface-800); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-500);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-surface-400); }
+
+/* ── Utility classes for design tokens ─────────────────────  */
+.text-bull  { color: var(--color-bull-500); }
+.text-bear  { color: var(--color-bear-500); }
+.text-accent { color: var(--color-accent-500); }
+.text-muted { color: var(--color-surface-300); }
+.text-label { color: var(--color-surface-200); }
+
+.bg-card    { background-color: var(--color-surface-700); }
+.bg-panel   { background-color: var(--color-surface-800); }
+.bg-elevated { background-color: var(--color-surface-600); }
+
+.border-subtle { border-color: var(--color-surface-500); }
+
+/* ── Skeleton loader animation ──────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-700) 25%,
+    var(--color-surface-600) 50%,
+    var(--color-surface-700) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Agent pulse animation ──────────────────────────────── */
+@keyframes agent-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.96); }
+}
+.agent-pulse { animation: agent-pulse 1.8s ease-in-out infinite; }
+
+/* ── Progress bar fill animation ────────────────────────── */
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+.progress-animate { animation: progress-fill 0.6s ease-out forwards; }
+
+/* ── Fade-in transitions ────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.4s ease-out forwards; }
+
+/* ── Score gauge arc ────────────────────────────────────── */
+@keyframes stroke-draw {
+  from { stroke-dashoffset: 220; }
+}
+.gauge-arc { animation: stroke-draw 1.2s ease-out forwards; }
+
+/* ── Ticker badge ───────────────────────────────────────── */
+.ticker-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-600);
+  color: var(--color-surface-100);
+}
+
+/* ── Kill switch button — high-contrast danger ──────────── */
+.kill-switch {
+  background-color: var(--color-bear-500);
+  color: #fff;
+  border: 2px solid #dc2626;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: background 0.15s, transform 0.1s;
+}
+.kill-switch:hover {
+  background-color: #dc2626;
+  transform: scale(1.02);
+}
+.kill-switch:active { transform: scale(0.98); }
+
+/* ── Card base ──────────────────────────────────────────── */
+.card {
+  background-color: var(--color-surface-700);
+  border: 1px solid var(--color-surface-500);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+}
+
+.card-sm {
+  background-color: var(--color-surface-700);
+  border: 1px solid var(--color-surface-500);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+}
+
+/* ── Status badges ──────────────────────────────────────── */
+.badge-queued    { color: var(--color-warning-500); background: var(--color-warning-100); }
+.badge-processing { color: var(--color-accent-400); background: var(--color-accent-100); }
+.badge-completed  { color: var(--color-bull-400);   background: var(--color-bull-100); }
+.badge-failed     { color: var(--color-bear-400);   background: var(--color-bear-100); }
+
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* ── Nexus score ring colors ────────────────────────────── */
+.score-strong-bull { color: var(--color-bull-500); }
+.score-bull        { color: var(--color-bull-400); }
+.score-neutral     { color: var(--color-warning-500); }
+.score-bear        { color: var(--color-bear-400); }
+.score-strong-bear { color: var(--color-bear-500); }
+
+/* ── Input base ─────────────────────────────────────────── */
+.input-base {
+  background-color: var(--color-surface-800);
+  border: 1px solid var(--color-surface-500);
+  border-radius: var(--radius-md);
+  color: var(--color-surface-100);
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+}
+.input-base::placeholder { color: var(--color-surface-400); }
+.input-base:focus {
+  border-color: var(--color-accent-500);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* ── Button variants ────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background-color: var(--color-accent-500);
+  color: #fff;
+}
+.btn-primary:hover { background-color: var(--color-accent-400); }
+
+.btn-secondary {
+  background-color: var(--color-surface-600);
+  color: var(--color-surface-100);
+  border: 1px solid var(--color-surface-500);
+}
+.btn-secondary:hover { background-color: var(--color-surface-500); }
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-surface-200);
+}
+.btn-ghost:hover {
+  background-color: var(--color-surface-600);
+  color: var(--color-surface-100);
+}
+
+.btn-danger {
+  background-color: var(--color-bear-500);
+  color: #fff;
+}
+.btn-danger:hover { background-color: var(--color-bear-400); }
+
+/* ── Sidebar nav item ───────────────────────────────────── */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  color: var(--color-surface-300);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+}
+.nav-item:hover {
+  background-color: var(--color-surface-600);
+  color: var(--color-surface-100);
+}
+.nav-item.active {
+  background-color: var(--color-accent-100);
+  color: var(--color-accent-400);
+}
+
+/* ── Table base ─────────────────────────────────────────── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.data-table th {
+  text-align: left;
+  padding: 10px 16px;
+  color: var(--color-surface-300);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-surface-500);
+}
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-surface-600);
+  color: var(--color-surface-100);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background-color: var(--color-surface-600); }
+.data-table tbody tr { transition: background 0.1s; }
+
+/* ── Dropdown ───────────────────────────────────────────── */
+.dropdown {
+  background-color: var(--color-surface-700);
+  border: 1px solid var(--color-surface-500);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+  z-index: 50;
+}
+.dropdown-item {
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  color: var(--color-surface-100);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.1s;
+}
+.dropdown-item:hover { background-color: var(--color-surface-600); }
+
+/* ── Divider ────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-surface-500);
+  margin: 0;
+}
